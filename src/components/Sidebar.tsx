@@ -23,8 +23,8 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="w-72 h-screen overflow-y-auto bg-white border-r border-gray-200 p-4 select-none shadow-sm">
-      <h3 className="text-xl font-semibold mb-6 text-gray-800 sticky top-0 bg-white z-10 pb-2">
+    <aside className="w-72 h-screen overflow-y-auto bg-[#000]/[0.9] border-r border-gray-200 px-4 select-none shadow-sm">
+      <h3 className="text-xl font-semibold pt-3 mb-6 text-gray-300 text-center sticky top-0 bg-transparent z-10 pb-2">
         AI Pipeline Components
       </h3>
       <div className="space-y-4">
@@ -34,7 +34,7 @@ export default function Sidebar() {
               className={`flex items-center justify-between p-3 rounded-lg border transition-all duration-200 ${
                 colorMap[node.type as keyof typeof colorMap] || 'border-gray-200 bg-gray-50'
               } cursor-move hover:shadow-md`}
-              draggable
+              draggable = { (node.subTypes ?? []).length > 0 ? false : true }
               onDragStart={(event) => onDragStart(event, node.type)}
               onClick={() => node.subTypes && toggleCollapse(node.type)}
             >

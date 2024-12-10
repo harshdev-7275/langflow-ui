@@ -19,6 +19,7 @@ type RFState = {
   onNodesChange: OnNodesChange;
   onEdgesChange: OnEdgesChange;
   onConnect: OnConnect;
+  exportToJson: () => string;
 };
 
 export const useFlowStore = create<RFState>((set, get) => ({
@@ -32,5 +33,9 @@ export const useFlowStore = create<RFState>((set, get) => ({
   },
   onConnect: (connection: Connection) => {
     set({ edges: addEdge(connection, get().edges) });
+  },
+  exportToJson: () => {
+    const { nodes, edges } = get();
+    return JSON.stringify({ nodes, edges }, null, 2);
   },
 }));

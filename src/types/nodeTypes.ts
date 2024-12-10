@@ -1,6 +1,50 @@
 import { Zap, Upload, Database, Brain, Send, FileText, Code, File } from 'lucide-react';
 
 // Node configuration
+// export const nodeTypes = [
+//   {
+//     type: 'trigger',
+//     label: 'Trigger',
+//     icon: Zap,
+//     image: '/images/trigger.png',
+//     description: 'Start your pipeline',
+
+//   },
+//   {
+//     type: 'ingestion',
+//     label: 'Ingestion',
+//     icon: Upload,
+//     image: '/images/ingestion.png',
+//     description: 'Data intake process',
+//     subTypes: [
+//       { type: 'ingestionText', label: 'Text Ingestion', icon: FileText, description: 'Ingest text data' },
+//       { type: 'ingestionFile', label: 'File Ingestion', icon: File, description: 'Ingest files such as CSV or JSON' },
+//       { type: 'ingestionAPI', label: 'API Ingestion', icon: Code, description: 'Ingest data via APIs' },
+//     ],
+//   },
+//   {
+//     type: 'datastore',
+//     label: 'Data Store',
+//     icon: Database,
+//     image: '/images/datastore.png',
+//     description: 'Store your data for processing or retrieval',
+//   },
+//   {
+//     type: 'llm',
+//     label: 'LLM',
+//     icon: Brain,
+//     image: '/images/llm.png',
+//     description: 'Process data using Language Models',
+//   },
+//   {
+//     type: 'output',
+//     label: 'Output',
+//     icon: Send,
+//     image: '/images/output.png',
+//     description: 'Display or export the final results',
+//   },
+// ];
+
 export const nodeTypes = [
   {
     type: 'trigger',
@@ -8,7 +52,8 @@ export const nodeTypes = [
     icon: Zap,
     image: '/images/trigger.png',
     description: 'Start your pipeline',
-
+    inputNotches: [], // No input for Trigger
+    outputNotches: [{ type: 'event', label: 'Event Triggered', color: 'yellow' }],
   },
   {
     type: 'ingestion',
@@ -17,9 +62,30 @@ export const nodeTypes = [
     image: '/images/ingestion.png',
     description: 'Data intake process',
     subTypes: [
-      { type: 'ingestionText', label: 'Text Ingestion', icon: FileText, description: 'Ingest text data' },
-      { type: 'ingestionFile', label: 'File Ingestion', icon: File, description: 'Ingest files such as CSV or JSON' },
-      { type: 'ingestionAPI', label: 'API Ingestion', icon: Code, description: 'Ingest data via APIs' },
+      {
+        type: 'ingestionText',
+        label: 'Text Ingestion',
+        icon: FileText,
+        description: 'Ingest text data',
+        inputNotches: [{ type: 'config', label: 'Configuration', color: 'blue' }],
+        outputNotches: [{ type: 'text', label: 'Text Output', color: 'blue' }],
+      },
+      {
+        type: 'ingestionFile',
+        label: 'File Ingestion',
+        icon: File,
+        description: 'Ingest files such as CSV or JSON',
+        inputNotches: [{ type: 'config', label: 'Configuration', color: 'blue' }],
+        outputNotches: [{ type: 'file', label: 'File Output', color: 'green' }],
+      },
+      {
+        type: 'ingestionAPI',
+        label: 'API Ingestion',
+        icon: Code,
+        description: 'Ingest data via APIs',
+        inputNotches: [{ type: 'config', label: 'Configuration', color: 'blue' }],
+        outputNotches: [{ type: 'apiData', label: 'API Data Output', color: 'purple' }],
+      },
     ],
   },
   {
@@ -28,6 +94,8 @@ export const nodeTypes = [
     icon: Database,
     image: '/images/datastore.png',
     description: 'Store your data for processing or retrieval',
+    inputNotches: [{ type: 'data', label: 'Input Data', color: 'green' }],
+    outputNotches: [{ type: 'data', label: 'Stored Data', color: 'green' }],
   },
   {
     type: 'llm',
@@ -35,6 +103,11 @@ export const nodeTypes = [
     icon: Brain,
     image: '/images/llm.png',
     description: 'Process data using Language Models',
+    inputNotches: [
+      { type: 'prompt', label: 'Prompt Input', color: 'purple' },
+      { type: 'data', label: 'Context Data', color: 'green' },
+    ],
+    outputNotches: [{ type: 'response', label: 'LLM Response', color: 'purple' }],
   },
   {
     type: 'output',
@@ -42,6 +115,8 @@ export const nodeTypes = [
     icon: Send,
     image: '/images/output.png',
     description: 'Display or export the final results',
+    inputNotches: [{ type: 'data', label: 'Final Data', color: 'red' }],
+    outputNotches: [], // No output for Output nodes
   },
 ];
 
