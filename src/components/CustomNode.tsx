@@ -1,7 +1,7 @@
 import React from "react";
 import { Handle, Position } from "reactflow";
 import { iconMap, colorMap } from "../types/nodeTypes";
-import "../index.css"
+import "../index.css";
 
 export interface CustomNodeProps {
   data: {
@@ -11,20 +11,29 @@ export interface CustomNodeProps {
     image?: string;
     inputNotches?: { type: string; label: string; color: string }[];
     outputNotches?: { type: string; label: string; color: string }[];
+    parameters?: { key: string; value: string }[];
+    onParameterChange?: (key: string, value: string) => void;
   };
 }
 
 const CustomNode = ({ data }: CustomNodeProps) => {
-  const { type, subtype, label, image, inputNotches, outputNotches } = data;
+  const {
+    type,
+    subtype,
+    label,
+    image,
+    inputNotches,
+    outputNotches,
+    parameters,
+    onParameterChange,
+  } = data;
 
-  // Determine icon and color for the node or subtype
   const Icon = iconMap[subtype || (type as keyof typeof iconMap)];
   const colors = colorMap[subtype || (type as keyof typeof colorMap)];
-  console.log(Icon);
 
   return (
     <div
-      className={`p-4 shadow-md rounded-md border-2 min-w-[100px] min-h-[100px] ${colors} flex flex-col items-center relative`}
+      className={`p-4 rounded-lg border shadow-gray-600 shadow-md border-gray-700 min-w-[300px] bg-[#070707] flex flex-col items-center text-white`}
     >
       {/* Input handles */}
       <div className="absolute top-0 left-0 right-0 flex justify-around -mt-2">
@@ -37,33 +46,47 @@ const CustomNode = ({ data }: CustomNodeProps) => {
             style={{
               background: notch.color,
               boxShadow: `0 0 10px ${notch.color}`,
-              borderColor:`rgb(255, 255, 255)`,
-              borderRadius:`100%`,
-              WebkitBoxShadow:`${notch.color} 0px 0px 0px 0px, ${notch.color} 0px 0px 8px 7px`,
-              opacity:`1`,
             }}
             className="w-3 h-3 rounded-full"
-          ></Handle>
+          />
         ))}
       </div>
 
-      {/* Icon or Image */}
-      <div className="flex flex-col items-center mb-2 mt-4">
+      {/* Icon */}
+      <div className="flex flex-col items-center mb-4 mt-2">
         {image ? (
-          <>{Icon && <Icon className="w-10 h-10 text-blue-600" />}</>
+          <img src={image} alt={label} className="w-10 h-10 object-contain" />
         ) : (
-          // <img src={image} alt={label} className="w-10 h-10 object-contain" />
           Icon && <Icon className="w-10 h-10 text-blue-600" />
         )}
       </div>
 
-      {/* Label, Type, and Subtype */}
-      <div className="text-center">
-        <div className="text-base font-semibold">
-          {subtype ? subtype : label}
-        </div>
-        <div className="text-sm text-gray-600">{type}</div>
+      {/* Label */}
+      <div className="text-center mb-4">
+        <div className="text-base font-semibold">{label}</div>
+        <div className="text-sm text-gray-400">{type}</div>
       </div>
+
+      {/* Parameters */}
+      {parameters && (
+        <div className="w-full space-y-3">
+          {parameters.map((param, index) => (
+            <div key={index} className="flex flex-col items-start w-full">
+              <label className="text-xs font-medium text-gray-400 mb-1">
+                {param.key}
+              </label>
+              <input
+                type="text"
+                value={param.value}
+                onChange={(e) =>
+                  onParameterChange && onParameterChange(param.key, e.target.value)
+                }
+                className="w-full border border-gray-600 rounded-lg px-3 py-2 text-sm bg-gray-800 text-white outline-none focus:ring-2 "
+              />
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Output handles */}
       <div className="absolute bottom-0 left-0 right-0 flex justify-around -mb-2">
@@ -73,20 +96,12 @@ const CustomNode = ({ data }: CustomNodeProps) => {
             type="source"
             position={Position.Bottom}
             id={notch.type}
-            style={{ 
+            style={{
               background: notch.color,
               boxShadow: `0 0 10px ${notch.color}`,
-              borderColor:`rgb(255, 255, 255)`,
-              borderRadius:`100%`,
-              WebkitBoxShadow:`${notch.color} 0px 0px 0px 0px, ${notch.color} 0px 0px 8px 7px`,
-              opacity:`1`,
-             }}
+            }}
             className="w-3 h-3 rounded-full"
-          >
-            {/* <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-xs whitespace-nowrap">
-              {notch.label}
-            </div> */}
-          </Handle>
+          />
         ))}
       </div>
     </div>

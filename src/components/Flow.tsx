@@ -44,15 +44,15 @@ function Flow() {
   
     const nodeData = nodeConfig.find(node => node.type === type);
     let newNodeData;
-
+  
     if (subtype && nodeData?.subTypes) {
       newNodeData = nodeData.subTypes.find(sub => sub.type === subtype);
     }
-
+  
     if (!newNodeData) {
       newNodeData = nodeData;
     }
-
+  
     const newNode = {
       id: `${subtype || type}-${nodes.length + 1}`,
       type,
@@ -62,6 +62,24 @@ function Flow() {
         label: newNodeData?.label || type,
         type,
         subtype,
+        parameters: newNodeData?.parameters || [],
+        onParameterChange: (key: string, value: string) => {
+          useFlowStore.setState((state) => ({
+            nodes: state.nodes.map((node) =>
+              node.id === `${subtype || type}-${nodes.length + 1}`
+                ? {
+                    ...node,
+                    data: {
+                      ...node.data,
+                      parameters: node.data.parameters.map((param: any) =>
+                        param.key === key ? { ...param, value } : param
+                      ),
+                    },
+                  }
+                : node
+            ),
+          }));
+        },
       },
     };
   
@@ -69,6 +87,7 @@ function Flow() {
       nodes: [...state.nodes, newNode],
     }));
   }, [nodes]);
+  
 
   const onConnectHandler = useCallback((params: Connection) => onConnect(params), [onConnect]);
 
@@ -106,7 +125,7 @@ function Flow() {
                 console.log(a);
                 a.href = url;
                 a.download = 'ai-pipeline-flow.json';
-                // a.click();
+                a.click();
               }}
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md"
             >
