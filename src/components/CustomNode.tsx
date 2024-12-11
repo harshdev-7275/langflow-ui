@@ -55,7 +55,7 @@ const CustomNode = ({ data }: CustomNodeProps) => {
       {/* Icon */}
       <div className="flex flex-col items-center mb-4 mt-2">
         {image ? (
-          <img src={image} alt={label} className="w-10 h-10 object-contain" />
+           Icon && <Icon className="w-10 h-10 text-blue-600" />
         ) : (
           Icon && <Icon className="w-10 h-10 text-blue-600" />
         )}
