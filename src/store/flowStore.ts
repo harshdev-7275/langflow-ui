@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 import {
   applyNodeChanges,
   applyEdgeChanges,
@@ -11,7 +11,7 @@ import {
   OnConnect,
   OnNodesChange,
   OnEdgesChange,
-} from 'reactflow';
+} from "reactflow";
 
 type RFState = {
   nodes: Node[];

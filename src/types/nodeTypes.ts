@@ -9,6 +9,7 @@ export const nodeTypes = [
     description: 'Start your pipeline',
     inputNotches: [],
     outputNotches: [{ type: 'event', label: 'Event Triggered', color: 'yellow' }],
+    rules : ["ingestionText", "ingestionFile", "ingestionAPI"]
   },
   {
     type: 'ingestion',
@@ -27,6 +28,7 @@ export const nodeTypes = [
         parameters: [
           { key: 'Text Source', value: '' },
         ],
+        rules: ["datastore"]
       },
       {
         type: 'ingestionFile',
@@ -38,6 +40,7 @@ export const nodeTypes = [
         parameters: [
           { key: 'File Path', value: '' },
         ],
+        rules:["datastore"]
       },
       {
         type: 'ingestionAPI',
@@ -50,6 +53,7 @@ export const nodeTypes = [
           { key: 'API URL', value: '' },
           { key: 'Headers', value: '' },
         ],
+        rules:["datastore"]
       },
     ],
   },
@@ -65,6 +69,7 @@ export const nodeTypes = [
       { key: 'Database Name', value: '' },
       { key: 'Connection String', value: '' },
     ],
+    rules:["llm", "output"]
   },
   {
     type: 'llm',
@@ -81,6 +86,7 @@ export const nodeTypes = [
       { key: 'Base URL', value: 'https://api.openai.com/v1' },
       { key: 'API Key', value: '' },
     ],
+    rules:["output"]
   },
   {
     type: 'output',
@@ -90,6 +96,7 @@ export const nodeTypes = [
     description: 'Display or export the final results',
     inputNotches: [{ type: 'data', label: 'Final Data', color: 'red' }],
     outputNotches: [],
+    rules:[]
   },
 ];
 
@@ -105,12 +112,12 @@ export const iconMap = {
 };
 
 export const colorMap = {
-  trigger: 'border-yellow-400 bg-yellow-50',
-  ingestion: 'border-blue-400 bg-blue-50',
-  ingestionText: 'border-blue-500 bg-blue-100',
-  ingestionFile: 'border-blue-600 bg-blue-200',
-  ingestionAPI: 'border-blue-700 bg-blue-300',
-  datastore: 'border-green-400 bg-green-50',
-  llm: 'border-purple-400 bg-purple-50',
-  output: 'border-red-400 bg-red-50',
+  trigger: 'border-yellow-400 ',
+  ingestion: 'border-blue-400 ',
+  ingestionText: 'border-blue-500 ',
+  ingestionFile: 'border-blue-600 ',
+  ingestionAPI: 'border-blue-700',
+  datastore: 'border-green-400',
+  llm: 'border-purple-400',
+  output: 'border-red-400',
 };

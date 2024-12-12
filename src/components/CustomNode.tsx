@@ -33,7 +33,7 @@ const CustomNode = ({ data }: CustomNodeProps) => {
 
   return (
     <div
-      className={`p-4 rounded-lg border shadow-gray-600 shadow-md border-gray-700 min-w-[300px] bg-[#070707] flex flex-col items-center text-white`}
+      className={`p-4 rounded-lg border shadow-gray-600 shadow-inner border-gray-700 min-w-[300px] bg-[#070707] flex flex-col items-center text-white`}
     >
       {/* Input handles */}
       <div className="absolute top-0 left-0 right-0 flex justify-around -mt-2">
@@ -54,11 +54,9 @@ const CustomNode = ({ data }: CustomNodeProps) => {
 
       {/* Icon */}
       <div className="flex flex-col items-center mb-4 mt-2">
-        {image ? (
-           Icon && <Icon className="w-10 h-10 text-blue-600" />
-        ) : (
-          Icon && <Icon className="w-10 h-10 text-blue-600" />
-        )}
+        {image
+          ? Icon && <Icon className="w-10 h-10 text-blue-600" />
+          : Icon && <Icon className="w-10 h-10 text-blue-600" />}
       </div>
 
       {/* Label */}
@@ -79,7 +77,8 @@ const CustomNode = ({ data }: CustomNodeProps) => {
                 type="text"
                 value={param.value}
                 onChange={(e) =>
-                  onParameterChange && onParameterChange(param.key, e.target.value)
+                  onParameterChange &&
+                  onParameterChange(param.key, e.target.value)
                 }
                 className="w-full border border-gray-600 rounded-lg px-3 py-2 text-sm bg-gray-800 text-white outline-none focus:ring-2 "
               />
